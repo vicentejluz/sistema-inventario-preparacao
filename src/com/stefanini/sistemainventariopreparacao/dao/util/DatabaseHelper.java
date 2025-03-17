@@ -38,6 +38,21 @@ public class DatabaseHelper {
         }
     }
 
+    public static void create(final String sql, ConnectionFactory connectionFactory, long equipmentID, boolean inPreparationRoom) {
+        try (Connection connection = connectionFactory.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setLong(1, equipmentID);
+            ps.setBoolean(2, inPreparationRoom);
+
+            int rowsAffected = ps.executeUpdate();
+            if (!(rowsAffected > 0))
+                throw new InsertFailedException("Error inserting data");
+
+        } catch (SQLException e) {
+            throw new DatabaseSQLException("Database error occurred while inserting data.", e);
+        }
+    }
+
     public static void delete(final String sql, ConnectionFactory connectionFactory, long id) {
         try (Connection connection = connectionFactory.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -67,6 +82,22 @@ public class DatabaseHelper {
         }
     }
 
+    public static void update(final String sql, ConnectionFactory connectionFactory, long equipmentID, boolean inPreparationRoom) {
+        try (Connection connection = connectionFactory.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+
+            ps.setLong(1, equipmentID);
+            ps.setBoolean(2, inPreparationRoom);
+
+            int rowsAffected = ps.executeUpdate();
+            if (!(rowsAffected > 0))
+                throw new UpdateFailedException("Error updating");
+
+        } catch (SQLException e) {
+            throw new DatabaseSQLException("Database error occurred while updating.", e);
+        }
+    }
+
     public static void update(final String sql, ConnectionFactory connectionFactory, long id, String name, long categoryId) {
         try (Connection connection = connectionFactory.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -82,6 +113,9 @@ public class DatabaseHelper {
             throw new DatabaseSQLException("Database error occurred while updating.", e);
         }
     }
+
+
+
 
     public static String findByID(String sql, ConnectionFactory connectionFactory, long id) {
         try (Connection connection = connectionFactory.getConnection();

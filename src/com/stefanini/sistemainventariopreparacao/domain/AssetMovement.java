@@ -8,16 +8,14 @@ public class AssetMovement {
     private String date;
     private String time;
     private String serialNumber;
-    private Long categoryID;
     private Long equipmentModelID;
     private MovementType movementType;
 
-    public AssetMovement(Long analystID, String date, String time, String serialNumber, Long categoryID, Long equipmentModelID, MovementType movementType) {
+    public AssetMovement(Long analystID, String date, String time, String serialNumber, Long equipmentModelID, MovementType movementType) {
         this.analystID = analystID;
         this.date = date;
         this.time = time;
         this.serialNumber = serialNumber;
-        this.categoryID = categoryID;
         this.equipmentModelID = equipmentModelID;
         this.movementType = movementType;
     }
@@ -58,14 +56,6 @@ public class AssetMovement {
         this.serialNumber = serialNumber;
     }
 
-    public Long getCategoryID() {
-        return categoryID;
-    }
-
-    public void setCategoryID(Long categoryID) {
-        this.categoryID = categoryID;
-    }
-
     public Long getEquipmentModelID() {
         return equipmentModelID;
     }
@@ -86,11 +76,11 @@ public class AssetMovement {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         AssetMovement that = (AssetMovement) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getAnalystID(), that.getAnalystID()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getSerialNumber(), that.getSerialNumber()) && Objects.equals(getCategoryID(), that.getCategoryID()) && Objects.equals(getEquipmentModelID(), that.getEquipmentModelID()) && getMovementType() == that.getMovementType();
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getAnalystID(), that.getAnalystID()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getSerialNumber(), that.getSerialNumber()) && Objects.equals(getEquipmentModelID(), that.getEquipmentModelID()) && getMovementType() == that.getMovementType();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAnalystID(), getDate(), getTime(), getSerialNumber(), getCategoryID(), getEquipmentModelID(), getMovementType());
+        return Objects.hash(getId(), getAnalystID(), getDate(), getTime(), getSerialNumber(), getEquipmentModelID(), getMovementType());
     }
 }
