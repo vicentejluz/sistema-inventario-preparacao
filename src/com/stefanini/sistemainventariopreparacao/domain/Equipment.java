@@ -7,10 +7,10 @@ public class Equipment {
     private String serialNumber;
     private Long equipmentModelID;
 
-    public Equipment(Long equipmentModelID, Long id, String serialNumber) {
-        this.equipmentModelID = equipmentModelID;
+    public Equipment(Long id, String serialNumber, Long equipmentModelID) {
         this.id = id;
         this.serialNumber = serialNumber;
+        this.equipmentModelID = equipmentModelID;
     }
 
     public Long getId() {

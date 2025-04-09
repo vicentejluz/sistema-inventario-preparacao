@@ -5,8 +5,6 @@ import com.stefanini.sistemainventariopreparacao.dao.util.DatabaseHelper;
 import com.stefanini.sistemainventariopreparacao.db.ConnectionFactory;
 import com.stefanini.sistemainventariopreparacao.domain.Analyst;
 import com.stefanini.sistemainventariopreparacao.exception.DatabaseSQLException;
-import com.stefanini.sistemainventariopreparacao.exception.NotFoundException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,13 +28,13 @@ public class AnalystDAO implements DAO<Analyst> {
 
     @Override
     public void delete(long id) {
-        final String sql = "DELETE FROM tb_analyst WHERE id = ?;";
+        final String sql = "UPDATE tb_analyst SET active = 0 WHERE id = ?;";
         DatabaseHelper.delete(sql, connectionFactory, id);
     }
 
     @Override
     public void update(Analyst analyst) {
-        final String sql = "UPDATE tb_analyst SET name = ? WHERE id = ?;";
+        final String sql = "UPDATE tb_analyst SET name = ?, active = 1 WHERE id = ?;";
         DatabaseHelper.update(sql, connectionFactory, analyst.getId(), analyst.getName());
     }
 
@@ -58,11 +56,9 @@ public class AnalystDAO implements DAO<Analyst> {
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
-                analysts.add(new Analyst(id, name));
+                Boolean active = resultSet.getBoolean("active");
+                analysts.add(new Analyst(id, name, active));
             }
-
-            if (analysts.isEmpty())
-                throw new NotFoundException("No analyst found.");
 
             return analysts;
         } catch (SQLException e) {
